@@ -3,6 +3,7 @@ require( "./credentials.php" );
 
 // 見つからなかった時用の出力内容
 $contenttype = 'text/plain';
+$filename = '';
 $r = $_SERVER['SERVER_NAME']; //'No img.';
 
 $id = $_GET['id'];
@@ -21,6 +22,7 @@ if( $id ){
         if( !$contenttype ){
           $contenttype = 'image/png';
         }
+        $filename = $result['filename'];
         $r = $result['img'];
       }
     }
@@ -31,6 +33,9 @@ if( $id ){
 }
 
 header( 'Content-Type: ' . $contenttype );
+if( $filename ){
+  header( 'Content-Disposition: filename=' . $filename );
+}
 echo( $r );
 
 @ob_flush();
